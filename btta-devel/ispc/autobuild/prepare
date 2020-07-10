@@ -1,0 +1,6 @@
+unset CFLAGS
+unset CXXFLAGS
+unset LDFLAGS
+unset CPPFLAGS
+
+export CXXFLAGS="-I/opt/32/include"

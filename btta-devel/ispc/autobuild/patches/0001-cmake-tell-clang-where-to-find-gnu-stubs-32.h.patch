@@ -1,0 +1,25 @@
+From eb792fe9983382f00ba986efa1360d0d442aa9f8 Mon Sep 17 00:00:00 2001
+From: Tianhao Chai <cth451@gmail.com>
+Date: Fri, 10 Jul 2020 02:38:34 -0500
+Subject: [PATCH] cmake: tell clang where to find gnu/stubs-32.h
+
+---
+ cmake/GenerateBuiltins.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/GenerateBuiltins.cmake b/cmake/GenerateBuiltins.cmake
+index e80d40c3..5c961934 100644
+--- a/cmake/GenerateBuiltins.cmake
++++ b/cmake/GenerateBuiltins.cmake
+@@ -246,7 +246,7 @@ function(builtin_to_cpp bit os_name arch supported_archs supported_oses resultFi
+         else()
+             add_custom_command(
+                 OUTPUT ${output}
+-                COMMAND ${CLANG_EXECUTABLE} ${target_flags} -w -m${bit} -emit-llvm -c ${inputFilePath} -o - | (\"${LLVM_DIS_EXECUTABLE}\" - || echo "builtins.c compile error")
++		COMMAND ${CLANG_EXECUTABLE} ${target_flags} $ENV{CXXFLAGS} -w -m${bit} -emit-llvm -c ${inputFilePath} -o - | (\"${LLVM_DIS_EXECUTABLE}\" - || echo "builtins.c compile error")
+                     | \"${Python3_EXECUTABLE}\" bitcode2cpp.py c --type=builtins-c --runtime=${bit} --os=${os_name} --arch=${target_arch} --llvm_as ${LLVM_AS_EXECUTABLE}
+                     > ${output}
+                 DEPENDS ${inputFilePath} bitcode2cpp.py
+-- 
+2.27.0
+

@@ -1,0 +1,7 @@
+PKGNAME=ispc
+PKGDEP="zlib ncurses glibc+32"
+BUILDDEP="flex bison llvm llvm+32"
+PKGDES="Intel SPMD Program Compiler"
+PKGSEC=devel
+
+CMAKE_AFTER="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
